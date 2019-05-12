@@ -3,7 +3,20 @@ Title: Factor Model Creation and Evaluation
 Version: 0.0.0.9000
 Authors@R: person("Rex", "Macey", email = "rex@macey.us", role = c("aut", "cre"))
 Description: Creates and tests factor models.
-Depends: R (>= 3.5.1)
-License: GPL-3
+Depends: R (>= 3.5.0)
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
+Imports:
+  dplyr,
+  knitr,
+  lubridate,
+  ggplot2,
+  reshape2,
+  tidyquant
+Suggests:
+    utils,
+    testthat
+VignetteBuilder:
+  utils
+RoxygenNote: 6.1.1
