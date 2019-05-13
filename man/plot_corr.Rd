@@ -16,5 +16,5 @@ A ggplot object
 The upper triangle is a heatmap, the lower triangle is a table.
 }
 \examples{
-plot_corr(cormat)
+plot_corr(stats::cor(matrix(rnorm(500), 100, 5)))
 }

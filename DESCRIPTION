@@ -4,7 +4,7 @@ Version: 0.0.0.9000
 Authors@R: person("Rex", "Macey", email = "rex@macey.us", role = c("aut", "cre"))
 Description: Creates and tests factor models.
 Depends: R (>= 3.5.0)
-License: GPL-2
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -13,10 +13,12 @@ Imports:
   lubridate,
   ggplot2,
   reshape2,
+  stats,
   tidyquant
 Suggests:
     utils,
     testthat
 VignetteBuilder:
-  utils
+  utils,
+  knitr
 RoxygenNote: 6.1.1

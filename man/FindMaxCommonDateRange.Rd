@@ -20,5 +20,5 @@ Find Maximum Common Date Range
 Finds the maximum common date range between two vectors of dates
 }
 \examples{
-FindMaxCommonDateRange(dates1, dates2)
+FindMaxCommonDateRange(factorReturns$date, factorReturns$date)
 }

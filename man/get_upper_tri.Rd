@@ -16,5 +16,5 @@ Upper triangle of matrix, lower is NA
 Get upper triangle of a correlation matrix
 }
 \examples{
-get_upper_tri(cormat)
+get_upper_tri(stats::cor(matrix(rnorm(500), 100, 5)))
 }

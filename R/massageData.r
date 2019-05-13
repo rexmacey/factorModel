@@ -8,22 +8,26 @@
 #' @param edate end date. Last day of the month of the return series.
 #'
 #' @return 3 column tibble with Symbol, Month-End Date, and Ra, the monthly return
+#' @import dplyr
+#' @import tidyquant
 #' @export
 #'
 #' @examples GetFundReturns(c("IVV", "SPY"), as.Date("2015-12-31"), as.Date("2018-12-31"))
 GetFundReturns <- function(symbols, sdate, edate){
+  requireNamespace("dplyr")
+  requireNamespace("tidyquant")
   fundreturns <- symbols %>%
-    tq_get(get  = "stock.prices",
+    tidyquant::tq_get(get  = "stock.prices",
            from = sdate,
-           to   = (edate %m+% days(1)))
+           to   = (lubridate::add_with_rollback(edate, lubridate::days(1))))
    colnames(fundreturns) <- c("symbol", colnames(fundreturns)[2:ncol(fundreturns)])
   fundreturns <- fundreturns %>%
-    group_by(symbol) %>%
-    tq_transmute(select     = adjusted, 
+    dplyr::group_by(symbol) %>%
+    tidyquant::tq_transmute(select = adjusted, 
                  mutate_fun = periodReturn, 
                  period     = "monthly", 
                  col_rename = "Ra") %>%
-    filter(date > sdate)
+    dplyr::filter(date > sdate)
   return(fundreturns)}
 
 #' Add a Factor
@@ -40,13 +44,16 @@ GetFundReturns <- function(symbols, sdate, edate){
 #' each column of the factorReturns creating excess returns.
 #'
 #' @return Tibble with new column
+#' @import dplyr
 #' @export
 #'
-#' @examples AddFactor(factorReturns=factorReturns.US, newFactorReturns=newFactorReturns, calcExcess=TRUE)
+#' @examples AddFactor(factorReturns[, 1:6], factorReturns[,c(1,7)], TRUE)
 AddFactor <- function(factorReturns, newFactorReturns, calcExcess = FALSE){
-  dateRange <- FindMaxCommonDateRange(factorReturns$date, newFactorReturns$date)
-  fr1 <- factorReturns %>% filter(date >= dateRange["start"] & date <= dateRange["end"])
-  fr2 <- newFactorReturns %>% filter(date >= dateRange["start"] & date <= dateRange["end"])
+  requireNamespace("dplyr")
+  # dateRange <- FindMaxCommonDateRange(factorReturns$date, newFactorReturns$date)
+  dateRange <- FindMaxCommonDateRange(factorReturns[, "date", drop=TRUE], newFactorReturns[, "date", drop=TRUE])
+  fr1 <- factorReturns %>% dplyr::filter(date >= dateRange["start"] & date <= dateRange["end"])
+  fr2 <- newFactorReturns %>% dplyr::filter(date >= dateRange["start"] & date <= dateRange["end"])
   if(calcExcess){
     for(i in 2:ncol(fr1)){
       fr1[, i] <- fr1[, i] - fr2[, 2]
@@ -63,7 +70,7 @@ AddFactor <- function(factorReturns, newFactorReturns, calcExcess = FALSE){
 #' @return Vector of two dates: start and end
 #' @export
 #'
-#' @examples FindMaxCommonDateRange(dates1, dates2)
+#' @examples FindMaxCommonDateRange(factorReturns$date, factorReturns$date)
 FindMaxCommonDateRange <- function(dates1, dates2){
   out <- c(start = max(min(dates1), min(dates2)),
            end = min(max(dates1), max(dates2)))

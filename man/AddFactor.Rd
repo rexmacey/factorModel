@@ -26,5 +26,5 @@ If the date columns do not align, the returning table will have the maximum comm
 first column of both tables of returns be date.
 }
 \examples{
-AddFactor(factorReturns=factorReturns.US, newFactorReturns=newFactorReturns, calcExcess=TRUE)
+AddFactor(factorReturns[, 1:6], factorReturns[,c(1,7)], TRUE)
 }
