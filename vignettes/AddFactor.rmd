@@ -1,0 +1,97 @@
+---
+title: "AddFactor"
+author: "Rex Macey"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{AddFactor}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = ""
+)
+```
+
+This vignette introduces the `addFactor` function which is used to manipulate a set of factors.  The RAFI factors have some high correlations.  There are also other series we might want to add to the set of factors.  The `addFactor` function helps manipulate an original table of factor data (e.g. the RAFI data) into one we want to use to build models.
+
+Specifically, we may want to:    
+* Add factors representing the U.S., International Developed, and Emerging regions. These would be market-cap weighted indices.    
+* Subtract these market-cap indices from the existing factors to reduce multi-collinearity.    
+
+Examples of these operations are showin in this vignette.  We will use the dataset representing U.S. factors.
+
+```{r, warning=FALSE, comment="", message=FALSE}
+library(dplyr, quietly = TRUE)
+library(factorModel, quietly = TRUE)
+library(lubridate, quietly = TRUE)
+data("factorReturns.US")
+data("factorGroups")
+head(factorReturns.US)
+```
+
+The following table shows the correlations among the factors.  Notice the high correlation between the factors.
+
+```{r}
+plot_corr(cor(factorReturns.US[,2:ncol(factorReturns.US)]))
+```
+
+
+First we will add a factor representing the Russell 2000 index using the iShares ETF (IWM). After we do that, we will add one for the US market represented by the iShares S&P 500 Index ETF (IVV) and subtract those returns from the other factors. We download prices and calculate monthly returns using the `get_monthly_returns` function.
+
+**Get returns for the two ETFs.**
+```{r}
+sdate <- min(factorReturns.US$date) %m-% months(1)
+edate <- max(factorReturns.US$date)
+symbols <- c("IWM", "IVV")
+monthly_returns <- get_monthly_returns(symbols = symbols, start_date = sdate, 
+                                       end_date = edate)
+```
+
+The `get_monthly_returns` function created a 3 column table with the symbol, month (date) and Ra the monthly return.  Here are the first and last few rows of the table.
+
+```{r comment=""}
+head(monthly_returns)
+tail(monthly_returns)
+```
+
+
+**Add the Russell 2000 (IWM) ETF series creating a new table.**  The new table will have the maximum common date range between the factor table and the series being added.
+```{r}
+factorUS <- AddFactor(factorReturns.US, 
+                      monthly_returns %>% filter(symbol == "IWM") %>% 
+                        select(c("date", "Ra")),
+                      calcExcess = FALSE)
+colnames(factorUS)[ncol(factorUS)] <- "USR2k"
+head(factorUS)
+```
+
+**Add the S&P 500 (IVV) ETF series while subtracting that return from the other series.**
+
+```{r}
+factorUS <- AddFactor(factorUS, 
+                      monthly_returns %>% filter(symbol == "IVV") %>% 
+                        select(c("date", "Ra")),
+                      calcExcess = TRUE)
+colnames(factorUS)[ncol(factorUS)] <- "USMkt"
+head(factorUS)
+```
+
+Comparing the correlation tables below, we can see the correlations are generally lower except for the two size factors (USSize and USR2k) which makes sense.  We wouldn't want both in a regression. 
+
+```{r, echo=FALSE}
+common_date_range <- FindMaxCommonDateRange(factorReturns.US$date, factorUS$date)
+cortbl1 <- cor(factorReturns.US %>% filter(date >= common_date_range["start"] & 
+                    date <= common_date_range["end"]) %>%
+             select(2:ncol(factorReturns.US)))
+cortbl2 <- cor(factorUS %>% filter(date >= common_date_range["start"] & 
+                    date <= common_date_range["end"]) %>%
+             select(2:ncol(factorUS)))
+    
+plot_corr(cortbl1)
+plot_corr(cortbl2)
+```
+

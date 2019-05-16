@@ -3,7 +3,7 @@
 \docType{data}
 \name{factorReturns.US}
 \alias{factorReturns.US}
-\title{RAFI U.S. Factor Returns}
+\title{5 RAFI Factor Returns Across the U.S.}
 \format{A tibble with 381 rows and 15 variables:
 \describe{
   \item{date}{date at the end of the month}
@@ -13,10 +13,16 @@
   \item{USSize}{U.S. Size factor}
   \item{USMom}{U.S. Momentum factor}
 }}
+\source{
+RAFI (Research Affiliates)
+}
 \usage{
 factorReturns.US
 }
 \description{
+RAFI U.S. Factor Returns
+}
+\details{
 A dataset containing the monthly returns of 5 factors across the US
 }
 \keyword{datasets}

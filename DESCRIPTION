@@ -1,6 +1,6 @@
 Package: factorModel
 Title: Factor Model Creation and Evaluation
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: person("Rex", "Macey", email = "rex@macey.us", role = c("aut", "cre"))
 Description: Creates and tests factor models.
 Depends: R (>= 3.5.0)

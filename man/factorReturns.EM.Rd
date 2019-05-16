@@ -3,7 +3,7 @@
 \docType{data}
 \name{factorReturns.EM}
 \alias{factorReturns.EM}
-\title{RAFI Emerging Market Factor Returns}
+\title{4 RAFI Factor Returns Across Emerging Markets}
 \format{A tibble with 381 rows and 15 variables:
 \describe{
   \item{date}{date at the end of the month}
@@ -12,10 +12,16 @@
   \item{EMQual}{Emerging Quality factor}
   \item{EMMom}{Emerging Momentum factor}
 }}
+\source{
+RAFI (Research Affiliates)
+}
 \usage{
 factorReturns.EM
 }
 \description{
+RAFI Emerging Market Factor Returns
+}
+\details{
 A dataset containing the monthly returns of 4 factors across emerging markets.
 }
 \keyword{datasets}

@@ -36,7 +36,7 @@ get_upper_tri <- function(cormat){
 #'
 #' @examples plot_corr(stats::cor(matrix(rnorm(500), 100, 5)))
 plot_corr <- function(cormat){
-  upper_tri <- get_upper_tri(stats::cor(cormat))
+  upper_tri <- get_upper_tri(cormat)
   melted_cormat <- reshape2::melt(upper_tri, na.rm=TRUE)
   out <- ggplot2::ggplot(data = melted_cormat, ggplot2::aes(Var2, Var1, fill = value))+
     ggplot2::geom_tile(color = "white")+
@@ -63,3 +63,4 @@ plot_corr <- function(cormat){
                                  title.position = "top", title.hjust = 0.5))
   return(out)
 }  
+

@@ -3,7 +3,7 @@
 \docType{data}
 \name{factorGroups}
 \alias{factorGroups}
-\title{Factor groups}
+\title{3 Item List Grouping the Factors Into Regions}
 \format{A list with 3 items:
 \describe{
   \item{US}{US factor names. }
@@ -14,6 +14,9 @@
 factorGroups
 }
 \description{
+Factor groups
+}
+\details{
 A 3 item list grouping the factorReturns variables into regions.
 }
 \keyword{datasets}

@@ -3,7 +3,7 @@
 \docType{data}
 \name{factorReturns.Intl}
 \alias{factorReturns.Intl}
-\title{RAFI International Factor Returns}
+\title{5 RAFI Factor Returns Across International Developed Markets}
 \format{A tibble with 381 rows and 15 variables:
 \describe{
   \item{date}{date at the end of the month}
@@ -13,10 +13,16 @@
   \item{DxUSize}{Int'l Developed Size factor}
   \item{DxUMom}{Int'l Developed Momentum factor}
 }}
+\source{
+RAFI (Research Affiliates)
+}
 \usage{
 factorReturns.Intl
 }
 \description{
+RAFI International Factor Returns
+}
+\details{
 A dataset containing the monthly returns of 5 factors across the international developed markets.
 }
 \keyword{datasets}

@@ -1,4 +1,4 @@
-#' RAFI Factor Returns Across Three Regions
+#' RAFI Monthly Factor Returns Across Three Regions
 #' 
 #' A dataset containing the monthly returns of 14 factors across the US, international developed and
 #' emerging markets.
@@ -21,6 +21,8 @@
 #'   \item{EMQual}{Emerging Quality factor}
 #'   \item{EMMom}{Emerging Momentum factor}
 #' }
+#' @source RAFI (Research Affiliates)
+#' @title 14 RAFI Factor Returns Across 3 Regions
 "factorReturns"
 
 #' RAFI U.S. Factor Returns
@@ -36,6 +38,8 @@
 #'   \item{USSize}{U.S. Size factor}
 #'   \item{USMom}{U.S. Momentum factor}
 #' }
+#' @source RAFI (Research Affiliates)
+#' @title 5 RAFI Factor Returns Across the U.S.
 "factorReturns.US"
 
 #' RAFI International Factor Returns 
@@ -51,6 +55,8 @@
 #'   \item{DxUSize}{Int'l Developed Size factor}
 #'   \item{DxUMom}{Int'l Developed Momentum factor}
 #' }
+#' @source RAFI (Research Affiliates)
+#' @title 5 RAFI Factor Returns Across International Developed Markets
 "factorReturns.Intl"
 
 #' RAFI Emerging Market Factor Returns
@@ -65,6 +71,8 @@
 #'   \item{EMQual}{Emerging Quality factor}
 #'   \item{EMMom}{Emerging Momentum factor}
 #' }
+#' @source RAFI (Research Affiliates)
+#' @title 4 RAFI Factor Returns Across Emerging Markets
 "factorReturns.EM"
 
 #' Factor groups
@@ -77,4 +85,5 @@
 #'   \item{Intl}{International developed factor names}
 #'   \item{EM}{Emerging market factor names}
 #' }
+#' @title 3 Item List Grouping the Factors Into Regions
 "factorGroups"

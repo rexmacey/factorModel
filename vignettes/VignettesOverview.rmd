@@ -1,0 +1,36 @@
+---
+title: "Vignettes Overview"
+author: "Rex Macey"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignettes Overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+Vignettes are long form documentation commonly included in packages. This vignette gives an overview of the factorModel package and describes the other vignettes.   
+
+## Package Overview    
+This vignette gives an overview of factor models and how this package helps build and test them.
+
+The premise of a factor model is that a fund's (fund and ETF are used interchangeably) performance can be explained by one or more factors such as the market return.  Factors might include the overall market return, value, quality, low volatility, and momentum to name a few.  
+
+Building a model involves identifying the factors to explain fund returns as well as defining how a fund will perform based on the performance of a factor.  For example, if there are two factors in the model, the return of the market (mktcap) as measured by a broad index such as the S&P 500 and another that captures size (size) as measured by the return of small stocks (Russell 2000) minus large stocks (S&P 500), then the model for a fund will be $$Return_{fund} = \alpha + \beta_{mktcap}*Return_{mktcap} + \beta_{size}*Return_{size} + residual$$
+
+Building a model involves the selection of factor and estimating the value of the coefficients (betas) of those factors for each fund.  This package helps to do those and to evaluate the results.  
+
+## Outline of the model building process
+* Select funds and get their returns. The `get_monthly_returns` function helps with this.
+* Select a set of factors and get their returns.  The `AddFactor` function helps with this.
+* Define an *in-sample* period over which to build a model
+* Define a different *out-of-sample* (oos) period over which to test the results
+* Define a metric for evaluating the effectiveness of a model
+* Build a set of models
+* Evaluate the models
+* Select the best.
+
+## Other Vignettes
+* Datasets.rmd describes the datasets included in the package and shows some of the data, including correlations.
+* AddFactor.rmd This vignette introduces the `addFactor` function which is used to manipulate a set of factors.  The RAFI factors have some high correlations.  There are also other series we might want to add to the set of factors.  The `addFactor` function helps manipulate an original table of factor data (e.g. the RAFI data) into one we want to use to build models. 

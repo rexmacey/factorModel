@@ -1,0 +1,73 @@
+---
+title: "Description of Factor Return Data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Description of Factor Return Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\usepackage[utf8]{inputenc}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(factorModel)
+data("factorReturns", package = "factorModel")
+data("factorReturns.Intl", package = "factorModel")
+data("factorReturns.US", package = "factorModel")
+data("factorReturns.EM", package = "factorModel")
+data("factorGroups", package = "factorModel")
+```
+
+## Overview
+
+This vignette describes the data included with the factorModel package.  
+Here are the datasets included with the package.  
+
+```{r listOfDatasets, echo=FALSE, comment=""}
+datasetlist <- (data(package="factorModel"))
+datasetlist$results[, c("Item", "Title")]
+```
+
+* factorReturns are monthly returns for `r ncol(factorReturns)` factors across 3 regions: U.S.; International Developed; and Emerging.  
+* factorReturns.US, factorReturns.Intl, and factorReturns.EM are subsets of factorReturns including only the factors for the regions.
+* factorGroups is a list showing which factors are in which region.
+
+Below are the returns for a few months for each region's factors.
+
+```{r exampleData, echo=FALSE, comment=""}
+cat("U.S.\n")
+head(factorReturns.US)
+tail(factorReturns.US)
+
+cat("\n\nInternational Developed\n")
+head(factorReturns.Intl)
+tail(factorReturns.Intl)
+
+cat("\n\nEmerging\n")
+head(factorReturns.EM)
+tail(factorReturns.EM)
+
+cat("\n\nFactor Groups\n")
+factorGroups
+```
+
+## Summary of Data
+
+Below is a summary of the distribution of each factor.  Note that the three regions have different lengths of data series.  There are no obvious outliers.
+
+```{r dataSummary, echo=FALSE, comment=""}
+summary(factorReturns)
+```
+
+## Correlations
+
+The following tables show the correlations.  We worry about correlations above 0.7 causing multi-collinearity in regressions.
+
+```{r dataCorrelations, echo=FALSE, comment=""}
+cat("U.S.\n")
+plot_corr(cor(factorReturns.US[,2:ncol(factorReturns.US)]))
+cat("\n\nInternational\n")
+plot_corr(cor(factorReturns.Intl[,2:ncol(factorReturns.Intl)]))
+cat("\n\nEmerging\n")
+plot_corr(cor(factorReturns.EM[,2:ncol(factorReturns.EM)]))
+```
+
