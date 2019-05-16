@@ -7,7 +7,7 @@
 #'
 #' @examples get_lower_tri(stats::cor(matrix(rnorm(500), 100, 5)))
 get_lower_tri<-function(cormat){
-  cormat[upper.tri(cormat)] <- NA
+  cormat[base::upper.tri(cormat)] <- NA
   return(cormat)
 }
 
@@ -20,7 +20,7 @@ get_lower_tri<-function(cormat){
 #'
 #' @examples get_upper_tri(stats::cor(matrix(rnorm(500), 100, 5)))
 get_upper_tri <- function(cormat){
-  cormat[lower.tri(cormat)]<- NA
+  cormat[base::lower.tri(cormat)]<- NA
   return(cormat)
 }
 
@@ -36,7 +36,6 @@ get_upper_tri <- function(cormat){
 #'
 #' @examples plot_corr(stats::cor(matrix(rnorm(500), 100, 5)))
 plot_corr <- function(cormat){
-  requireNamespace("ggplot2")
   upper_tri <- get_upper_tri(stats::cor(cormat))
   melted_cormat <- reshape2::melt(upper_tri, na.rm=TRUE)
   out <- ggplot2::ggplot(data = melted_cormat, ggplot2::aes(Var2, Var1, fill = value))+

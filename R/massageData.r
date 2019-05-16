@@ -10,24 +10,27 @@
 #' @return 3 column tibble with Symbol, Month-End Date, and Ra, the monthly return
 #' @import dplyr
 #' @import tidyquant
+#' @import PerformanceAnalytics
 #' @export
 #'
-#' @examples GetFundReturns(c("IVV", "SPY"), as.Date("2015-12-31"), as.Date("2018-12-31"))
+#' @examples 
+#' GetFundReturns(symbols = c("IVV", "SPY"), sdate=as.Date("2015-12-31"), edate=as.Date("2018-12-31"))
 GetFundReturns <- function(symbols, sdate, edate){
-  requireNamespace("dplyr")
-  requireNamespace("tidyquant")
-  fundreturns <- symbols %>%
-    tidyquant::tq_get(get  = "stock.prices",
-           from = sdate,
-           to   = (lubridate::add_with_rollback(edate, lubridate::days(1))))
-   colnames(fundreturns) <- c("symbol", colnames(fundreturns)[2:ncol(fundreturns)])
-  fundreturns <- fundreturns %>%
-    dplyr::group_by(symbol) %>%
-    tidyquant::tq_transmute(select = adjusted, 
-                 mutate_fun = periodReturn, 
-                 period     = "monthly", 
-                 col_rename = "Ra") %>%
-    dplyr::filter(date > sdate)
+  fundreturns <- get_monthly_returns(symbols = symbols,
+                                     start_date = sdate,
+                                     end_date = edate)
+  #fundreturns <- symbols %>%
+  #  tidyquant::tq_get(get  = "stock.prices",
+  #         from = sdate,
+  #         to   = (lubridate::add_with_rollback(edate, lubridate::days(1))))
+  # colnames(fundreturns) <- c("symbol", colnames(fundreturns)[2:ncol(fundreturns)])
+  #fundreturns <- fundreturns %>%
+  #  dplyr::group_by(symbol) %>%
+  #  tidyquant::tq_transmute(select = adjusted, 
+  #               mutate_fun = periodReturn, 
+  #               period     = "monthly", 
+  #               col_rename = "Ra") %>%
+  #  dplyr::filter(date > sdate)
   return(fundreturns)}
 
 #' Add a Factor

@@ -21,5 +21,5 @@ Example: use 2015-12-31 to generate the first monthly return for January 2016.}
 Retrieves prices from web and calculates monthly returns.
 }
 \examples{
-GetFundReturns(c("IVV", "SPY"), as.Date("2015-12-31"), as.Date("2018-12-31"))
+GetFundReturns(symbols = c("IVV", "SPY"), sdate=as.Date("2015-12-31"), edate=as.Date("2018-12-31"))
 }

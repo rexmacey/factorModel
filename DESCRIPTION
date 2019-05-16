@@ -12,9 +12,13 @@ Imports:
   knitr,
   lubridate,
   ggplot2,
+  PerformanceAnalytics,
   reshape2,
+  riingo,
   stats,
-  tidyquant
+  tidyquant,
+  xts,
+  zoo
 Suggests:
     utils,
     testthat
