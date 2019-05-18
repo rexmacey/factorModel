@@ -5,7 +5,7 @@
 \title{Get Monthly Returns}
 \usage{
 get_monthly_returns(symbols, tiingo_token = Sys.getenv("TIINGO_TOKEN"),
-  start_date, end_date)
+  start_date = NULL, end_date = NULL)
 }
 \arguments{
 \item{symbols}{Character vector of symbols}

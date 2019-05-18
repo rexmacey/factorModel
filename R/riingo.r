@@ -19,14 +19,14 @@ convert_prices_to_monthly_returns <- function(prices){
 #' @param start_date Start date
 #' @param end_date End date.
 #'
-#' @return Vector of monthly returns.
+#' @return Vector of monthly returns.  
 #' @export
 #'
 #' @examples get_monthly_returns(symbols="IVV", 
 #' start_date = as.Date("2014-12-31"), 
 #' end_date = as.Date("2018-12-31"))
 get_monthly_returns <- function(symbols, tiingo_token=Sys.getenv("TIINGO_TOKEN"), 
-                                start_date, end_date){
+                                start_date=NULL, end_date=NULL){
   riingo::riingo_set_token(tiingo_token)
   prices <- riingo::riingo_prices(symbols, resample_frequency = "monthly",
                                   start_date = start_date,
@@ -42,6 +42,7 @@ get_monthly_returns <- function(symbols, tiingo_token=Sys.getenv("TIINGO_TOKEN")
   }
   out <- out[stats::complete.cases(out), ]
   colnames(out) <- c("symbol", "date", "Ra")
+  out$date <- ceiling_date(out$date, unit="months") %m-% days(1)
   return(out)
 }
 
